@@ -1,41 +1,52 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 
 /**
  * Created by huseyin on 30.03.2017.
  */
-public class GeneralTree {
+public class GeneralFullTree {
 
-    private List<TreeNode> nodes;
+    private TreeNode root;
     private int branch_f;
     private int depth;
+    private int position;
+    private int ID;
 
-    public GeneralTree() {
+    public GeneralFullTree() {
         branch_f = 0;
         depth = 0;
-        nodes = new ArrayList<TreeNode>();
+        root = null;
+        position = -1;
+        ID = 0 ;
     }
 
-    public void createFullTree(int b, int d) {
+    public GeneralFullTree(int b, int d, int p) {
         depth = d;
         branch_f = b;
-        nodes.add(new TreeNode(0));
+        position = p - 1;
+        createID();
 
-        int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
+        root = new TreeNode(0);
+
+        // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
         ArrayList<TreeNode> queue = new ArrayList<>();
+        queue.add(root);
 
-        for (int i = 0; i < nodeCount; i++) {
+        for (int i = 0 ; i < depth ; i++ ) {
             TreeNode expand = queue.get(0);
             queue.remove(0);
-            for (int j = 0; j < branch_f; j++) {
+            for ( int j = 0 ; j < branch_f ; j++ ) {
                 TreeNode newTreeNode = new TreeNode(i * branch_f + j + 1);
                 expand.addChild(newTreeNode);
-                nodes.add(newTreeNode);
                 queue.add(newTreeNode);
             }
         }
     }
+
+    private void createID() {
+        this.ID = ( position * 100 ) + depth ;
+    }
+
+    /*
     public void inorderTraverse(){
 
         int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
@@ -50,36 +61,21 @@ public class GeneralTree {
                 queue.add(newTreeNode);
             }
         }
-    }
+    } */
 
     public int getBranch_f() {
         return branch_f;
-    }
-
-    public void setBranch_f(int branch_f) {
-        this.branch_f = branch_f;
     }
 
     public int getDepth() {
         return depth;
     }
 
-    public void setDepth(int depth) {
-        this.depth = depth;
+    public int getPosition() {
+        return position;
     }
 
-    public List<TreeNode> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<TreeNode> nodes) {
-        this.nodes = nodes;
-    }
-
-    public static void main(String[] args) {
-        GeneralTree t = new GeneralTree();
-        t.createFullTree(2, 3);
-
-
+    public int getID() {
+        return ID;
     }
 }
