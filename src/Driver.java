@@ -18,6 +18,7 @@ public class Driver {
 
     public static void main(String[] args) {
 
+
         // for binary trees
         ArrayList<GeneralFullTree> BinaryTrees = new ArrayList<GeneralFullTree>();
         while (BinaryTrees.size() <= 100) {
@@ -33,7 +34,6 @@ public class Driver {
                 BinaryTrees.add(tree);
 
         }
-
         // for ternary trees
         ArrayList<GeneralFullTree> TernaryTrees = new ArrayList<GeneralFullTree>();
         while (TernaryTrees.size() <= 100) {

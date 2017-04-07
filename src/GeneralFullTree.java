@@ -27,18 +27,20 @@ public class GeneralFullTree {
 
         root = new TreeNode(0);
 
-        // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
+        int nodeCount = (int) (Math.pow(branch_f, depth +1) - branch_f) / (branch_f - 1);
         ArrayList<TreeNode> queue = new ArrayList<>();
         queue.add(root);
-
-        for (int i = 0 ; i < depth ; i++ ) {
+        int i = 0;
+        while(nodeCount>0) {
             TreeNode expand = queue.get(0);
             queue.remove(0);
             for ( int j = 0 ; j < branch_f ; j++ ) {
                 TreeNode newTreeNode = new TreeNode(i * branch_f + j + 1);
                 expand.addChild(newTreeNode);
                 queue.add(newTreeNode);
+                nodeCount--;
             }
+            i++;
         }
     }
 
@@ -46,22 +48,7 @@ public class GeneralFullTree {
         this.ID = ( position * 100 ) + depth ;
     }
 
-    /*
-    public void inorderTraverse(){
 
-        int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
-        ArrayList<TreeNode> queue = new ArrayList<>();
-
-        for (int i = 0; i < nodeCount; i++) {
-            queue.remove(0);
-            for (int j = 0; j < branch_f; j++) {
-                TreeNode newTreeNode = new TreeNode(i * branch_f + j + 1);
-                expand.addChild(newTreeNode);
-                nodes.add(newTreeNode);
-                queue.add(newTreeNode);
-            }
-        }
-    } */
 
     public int getBranch_f() {
         return branch_f;
@@ -78,4 +65,38 @@ public class GeneralFullTree {
     public int getID() {
         return ID;
     }
+
+    public void depthFirstSearch(int key){
+
+        // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
+        ArrayList<TreeNode> queue = new ArrayList<>();
+        boolean found;
+        found = false;
+        queue.add(root);
+       while(!queue.isEmpty()){
+            TreeNode expand = queue.get(0);
+            queue.remove(0);
+            if(expand.getData() == key){
+                System.out.print("found");
+                found = true;
+                break;
+            }
+            else {
+                if(expand.getChildren().size() > 0) {
+                    for (int j = branch_f - 1; j >= 0; j--) {
+                            queue.add(0, expand.getChildren().get(j));
+                    }
+                }
+            }
+        }
+        if(!found)
+            System.out.println("Not found");
+    }
+    public static void main(String[] args) {
+        GeneralFullTree tree = new GeneralFullTree(3,2,4);
+
+        tree.depthFirstSearch(2);
+
+    }
+
 }
