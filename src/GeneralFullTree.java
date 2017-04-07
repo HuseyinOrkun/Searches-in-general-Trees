@@ -27,7 +27,8 @@ public class GeneralFullTree {
 
         root = new TreeNode(0);
 
-        int nodeCount = (int) (Math.pow(branch_f, depth +1) - branch_f) / (branch_f - 1);
+        int nodeCount = (int) (Math.pow(branch_f, depth +1) - branch_f-1) / (branch_f - 1);
+
         ArrayList<TreeNode> queue = new ArrayList<>();
         queue.add(root);
         int i = 0;
@@ -92,11 +93,4 @@ public class GeneralFullTree {
         if(!found)
             System.out.println("Not found");
     }
-    public static void main(String[] args) {
-        GeneralFullTree tree = new GeneralFullTree(3,2,4);
-
-        tree.depthFirstSearch(2);
-
-    }
-
 }
