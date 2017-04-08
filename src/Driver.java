@@ -8,12 +8,9 @@ public class Driver {
 
     public static GeneralFullTree createRandomGeneralTree( int branch ) {
 
-
-
         int depth = (int) (Math.random() * 3 + 5);
-        int position = (int) (Math.random() * ( Math.pow(branch, depth)  + 1 ) );
 
-        return (new GeneralFullTree(branch, depth, position) );
+        return (new GeneralFullTree(branch, depth) );
     }
 
     public static void main(String[] args) {

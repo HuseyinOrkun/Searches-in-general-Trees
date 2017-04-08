@@ -1,3 +1,5 @@
+import sun.reflect.generics.tree.Tree;
+
 import java.util.ArrayList;
 
 /**
@@ -19,10 +21,10 @@ public class GeneralFullTree {
         ID = 0 ;
     }
 
-    public GeneralFullTree(int b, int d, int p) {
+    public GeneralFullTree(int b, int d) {
         depth = d;
         branch_f = b;
-        position = p - 1;
+        position = (int) (Math.random() * ( Math.pow(b, d)  + 1 ) );
         createID();
 
         root = new TreeNode(0);
@@ -44,12 +46,52 @@ public class GeneralFullTree {
             i++;
         }
     }
+    public ArrayList<TreeNode> depthFirstSearch(){   // you can do this by giving the parent til the root but might take more time
+
+        // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
+        ArrayList<TreeNode> queue = new ArrayList<>();
+        ArrayList<TreeNode> path = new ArrayList<>();
+        boolean found;
+        found = false;
+        queue.add(root);
+        while(!queue.isEmpty()){
+            TreeNode expand = queue.get(0);
+            queue.remove(0);
+            path.add(expand);
+            if(expand.getData() == position){
+                return path;
+            }
+            else {
+                if(expand.getChildren().size() > 0) {
+                    for (int j = branch_f - 1; j >= 0; j--) {
+                        queue.add(0, expand.getChildren().get(j));
+                    }
+                }
+            }
+
+        }
+        return null;
+    }
+
+    public void iddfs (){
+        int depthBound = 0;
+        boolean found;
+        do{
+
+            found = dbdepthfirst();
+            depthBound++;// this will be written later
+
+        } while (!found && depthBound <= depth);
+
+
+    }
+    private boolean dbdepthfirst(){
+        return false;
+    }
 
     private void createID() {
         this.ID = ( position * 100 ) + depth ;
     }
-
-
 
     public int getBranch_f() {
         return branch_f;
@@ -67,30 +109,11 @@ public class GeneralFullTree {
         return ID;
     }
 
-    public void depthFirstSearch(int key){
 
-        // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
-        ArrayList<TreeNode> queue = new ArrayList<>();
-        boolean found;
-        found = false;
-        queue.add(root);
-       while(!queue.isEmpty()){
-            TreeNode expand = queue.get(0);
-            queue.remove(0);
-            if(expand.getData() == key){
-                System.out.print("found");
-                found = true;
-                break;
-            }
-            else {
-                if(expand.getChildren().size() > 0) {
-                    for (int j = branch_f - 1; j >= 0; j--) {
-                            queue.add(0, expand.getChildren().get(j));
-                    }
-                }
-            }
-        }
-        if(!found)
-            System.out.println("Not found");
+    public static void main(String[]args){
+        GeneralFullTree t = new GeneralFullTree(2,10);
+        System.out.println(t.getPosition());
+        ArrayList<TreeNode> path = t.depthFirstSearch();
+        System.out.print(path);
     }
 }
