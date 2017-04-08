@@ -1,5 +1,3 @@
-import sun.reflect.generics.tree.Tree;
-
 import java.util.ArrayList;
 
 /**
@@ -46,13 +44,14 @@ public class GeneralFullTree {
             i++;
         }
     }
+
+
     public ArrayList<TreeNode> depthFirstSearch(){   // you can do this by giving the parent til the root but might take more time
 
         // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
         ArrayList<TreeNode> queue = new ArrayList<>();
         ArrayList<TreeNode> path = new ArrayList<>();
-        boolean found;
-        found = false;
+
         queue.add(root);
         while(!queue.isEmpty()){
             TreeNode expand = queue.get(0);
@@ -73,20 +72,31 @@ public class GeneralFullTree {
         return null;
     }
 
-    public void iddfs (){
-        int depthBound = 0;
-        boolean found;
-        do{
 
-            found = dbdepthfirst();
-            depthBound++;// this will be written later
-
-        } while (!found && depthBound <= depth);
-
-
-    }
-    private boolean dbdepthfirst(){
+    public boolean IterativeDeepeningDFS() {
+        for( int depthBound = 0 ; depthBound <= this.getDepth() ; depthBound++ ) {
+            System.out.println("Now we are entering depth bounded dfs...");
+            if( depthBoundedDFS( root, depthBound ) )
+                return true;
+        }
         return false;
+    }
+    private boolean depthBoundedDFS( TreeNode root, int depthBound ) {
+        System.out.print( root.getData() + " ");
+        if ( depthBound == 0 && isGoal(root) ) {
+            return true;
+        }
+        if(depthBound > 0 )
+            for ( TreeNode child : root.getChildren() ) {
+                if( depthBoundedDFS(child, depthBound-1) ) {
+                    return true;
+                }
+            }
+        return false;
+    }
+
+    private boolean isGoal(TreeNode node) {
+        return node.getData() == getPosition();
     }
 
     private void createID() {
@@ -111,9 +121,9 @@ public class GeneralFullTree {
 
 
     public static void main(String[]args){
-        GeneralFullTree t = new GeneralFullTree(2,10);
+        GeneralFullTree t = new GeneralFullTree(2, 3);
         System.out.println(t.getPosition());
-        ArrayList<TreeNode> path = t.depthFirstSearch();
-        System.out.print(path);
+
+        System.out.print("finito: " + t.IterativeDeepeningDFS() );
     }
 }
