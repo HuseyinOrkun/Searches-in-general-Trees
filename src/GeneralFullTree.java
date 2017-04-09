@@ -23,7 +23,7 @@ public class GeneralFullTree {
         depth = d;
         branch_f = b;
         root = new TreeNode(0);
-        System.out.println( "Generating bf: " + b + ", d: " + d);
+        //System.out.println( "Generating bf: " + b + ", d: " + d);
 
         int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
         int lowBound = (int) (Math.pow(branch_f, depth ) - 1) / (branch_f - 1) + 1;
@@ -33,7 +33,7 @@ public class GeneralFullTree {
 
         queue.clear();
         queue.offer(root);
-        System.out.println("Added root");
+        //System.out.println("Added root");
         int i = 0;
         while (nodeCount > 0) {
             TreeNode expand = queue.poll();
@@ -121,13 +121,12 @@ public class GeneralFullTree {
     }
 
     @Override
-    public boolean equals(Object other)
-    {
-        if ( other == null) return false;
-        if ( other == this) return true;
-        if ( !( other instanceof GeneralFullTree)) return false;
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof GeneralFullTree)) return false;
 
-        GeneralFullTree otherTree = ( GeneralFullTree) other;
+        GeneralFullTree otherTree = (GeneralFullTree) other;
 
         return (this.position == otherTree.position && this.depth == otherTree.depth);
     }
