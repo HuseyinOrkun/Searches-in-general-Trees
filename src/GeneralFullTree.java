@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Stack;
+import java.util.Random;
 
 /**
  * Created by huseyin on 30.03.2017.
@@ -16,26 +18,27 @@ public class GeneralFullTree {
         depth = 0;
         root = null;
         position = -1;
-        ID = 0 ;
+        ID = 0;
     }
 
-    public GeneralFullTree(int b, int d) {
+    GeneralFullTree(int b, int d) {
         depth = d;
         branch_f = b;
-        position = (int) (Math.random() * ( Math.pow(b, d)  + 1 ) );
-        createID();
-
         root = new TreeNode(0);
 
-        int nodeCount = (int) (Math.pow(branch_f, depth +1) - branch_f-1) / (branch_f - 1);
+        int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
+        int lowBound = (int) (Math.pow(branch_f, depth ) - 1) / (branch_f - 1) +1;
+
+        position = lowBound + (int) (Math.random() * (nodeCount-lowBound));
+        createID();
 
         ArrayList<TreeNode> queue = new ArrayList<>();
         queue.add(root);
         int i = 0;
-        while(nodeCount>0) {
+        while (nodeCount > 0) {
             TreeNode expand = queue.get(0);
             queue.remove(0);
-            for ( int j = 0 ; j < branch_f ; j++ ) {
+            for (int j = 0; j < branch_f; j++) {
                 TreeNode newTreeNode = new TreeNode(i * branch_f + j + 1);
                 expand.addChild(newTreeNode);
                 queue.add(newTreeNode);
@@ -46,49 +49,43 @@ public class GeneralFullTree {
     }
 
 
-    public ArrayList<TreeNode> depthFirstSearch(){   // you can do this by giving the parent til the root but might take more time
+    public boolean depthFirstSearch() {
 
-        // int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
-        ArrayList<TreeNode> queue = new ArrayList<>();
-        ArrayList<TreeNode> path = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
 
-        queue.add(root);
-        while(!queue.isEmpty()){
-            TreeNode expand = queue.get(0);
-            queue.remove(0);
-            path.add(expand);
-            if(expand.getData() == position){
-                return path;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode expand = stack.pop();
+            if (isGoal(expand)) {
+                return true;
             }
-            else {
-                if(expand.getChildren().size() > 0) {
-                    for (int j = branch_f - 1; j >= 0; j--) {
-                        queue.add(0, expand.getChildren().get(j));
-                    }
+            if (expand.getChildren().size() > 0) {
+                for (int j = getBranch_f() - 1; j >= 0; j--) {
+                    stack.push(expand.getChildren().get(j));
                 }
             }
-
         }
-        return null;
+        return false;
     }
 
 
+
+
     public boolean IterativeDeepeningDFS() {
-        for( int depthBound = 0 ; depthBound <= this.getDepth() ; depthBound++ ) {
-            System.out.println("Now we are entering depth bounded dfs...");
-            if( depthBoundedDFS( root, depthBound ) )
+        for (int depthBound = 0; depthBound <= this.getDepth(); depthBound++) {
+            if (depthBoundedDFS(root, depthBound))
                 return true;
         }
         return false;
     }
-    private boolean depthBoundedDFS( TreeNode root, int depthBound ) {
-        System.out.print( root.getData() + " ");
-        if ( depthBound == 0 && isGoal(root) ) {
+
+    private boolean depthBoundedDFS(TreeNode root, int depthBound) {
+        if (depthBound == 0 && isGoal(root)) {
             return true;
         }
-        if(depthBound > 0 )
-            for ( TreeNode child : root.getChildren() ) {
-                if( depthBoundedDFS(child, depthBound-1) ) {
+        if (depthBound > 0)
+            for (TreeNode child : root.getChildren()) {
+                if (depthBoundedDFS(child, depthBound - 1)) {
                     return true;
                 }
             }
@@ -96,11 +93,11 @@ public class GeneralFullTree {
     }
 
     private boolean isGoal(TreeNode node) {
-        return node.getData() == getPosition();
+        return node.getData() == getPosition()-1;
     }
 
     private void createID() {
-        this.ID = ( position * 100 ) + depth ;
+        this.ID = (position * 100) + depth ;
     }
 
     public int getBranch_f() {
@@ -120,10 +117,4 @@ public class GeneralFullTree {
     }
 
 
-    public static void main(String[]args){
-        GeneralFullTree t = new GeneralFullTree(2, 3);
-        System.out.println(t.getPosition());
-
-        System.out.print("finito: " + t.IterativeDeepeningDFS() );
-    }
 }
