@@ -7,10 +7,17 @@ import java.util.List;
 
 public class TreeNode{
     private int data;
-    private List<TreeNode> children = new ArrayList<>();
+    private List<TreeNode> children;
     private TreeNode parent = null;
 
-    public TreeNode(int data) {
+    public TreeNode()
+    {
+        children = new ArrayList<>(10);
+    }
+
+    public TreeNode(int data)
+    {
+        children = new ArrayList<>(10);
         this.data = data;
     }
 

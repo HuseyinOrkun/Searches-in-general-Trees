@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Stack;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by huseyin on 30.03.2017.
@@ -21,29 +19,31 @@ public class GeneralFullTree {
         ID = 0;
     }
 
-    GeneralFullTree(int b, int d) {
+    GeneralFullTree(int b, int d, Queue<TreeNode> queue) {
         depth = d;
         branch_f = b;
         root = new TreeNode(0);
+        System.out.println( "Generating bf: " + b + ", d: " + d);
 
         int nodeCount = (int) (Math.pow(branch_f, depth + 1) - 1) / (branch_f - 1);
-        int lowBound = (int) (Math.pow(branch_f, depth ) - 1) / (branch_f - 1) +1;
+        int lowBound = (int) (Math.pow(branch_f, depth ) - 1) / (branch_f - 1) + 1;
 
         position = lowBound + (int) (Math.random() * (nodeCount-lowBound));
         createID();
 
-        ArrayList<TreeNode> queue = new ArrayList<>();
-        queue.add(root);
+        queue.clear();
+        queue.offer(root);
+        System.out.println("Added root");
         int i = 0;
         while (nodeCount > 0) {
-            TreeNode expand = queue.get(0);
-            queue.remove(0);
+            TreeNode expand = queue.poll();
             for (int j = 0; j < branch_f; j++) {
                 TreeNode newTreeNode = new TreeNode(i * branch_f + j + 1);
                 expand.addChild(newTreeNode);
                 queue.add(newTreeNode);
                 nodeCount--;
             }
+            //System.out.println(nodeCount);
             i++;
         }
     }
@@ -67,9 +67,6 @@ public class GeneralFullTree {
         }
         return false;
     }
-
-
-
 
     public boolean IterativeDeepeningDFS() {
         for (int depthBound = 0; depthBound <= this.getDepth(); depthBound++) {
@@ -97,7 +94,7 @@ public class GeneralFullTree {
     }
 
     private void createID() {
-        this.ID = (position * 100) + depth ;
+        this.ID = (position * 1000) + depth ;
     }
 
     public int getBranch_f() {
@@ -116,5 +113,22 @@ public class GeneralFullTree {
         return ID;
     }
 
+    @Override
+    public int hashCode()
+    {
+        int[] arr = new int[] { position, depth };
+        return Arrays.hashCode(arr);
+    }
 
+    @Override
+    public boolean equals(Object other)
+    {
+        if ( other == null) return false;
+        if ( other == this) return true;
+        if ( !( other instanceof GeneralFullTree)) return false;
+
+        GeneralFullTree otherTree = ( GeneralFullTree) other;
+
+        return (this.position == otherTree.position && this.depth == otherTree.depth);
+    }
 }

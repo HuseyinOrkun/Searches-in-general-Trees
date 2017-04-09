@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 
 /**
@@ -7,127 +7,109 @@ import java.util.ArrayList;
 
 public class Driver {
 
-    private static GeneralFullTree createRandomGeneralTree(int branch) {
+    public static final int SIZE = 1;
+
+    private static GeneralFullTree createRandomGeneralTree(int branch, Queue<TreeNode> queue) {
 
         int depth = 6 + (int)(Math.random() * 5);
 
-        return (new GeneralFullTree(branch, depth) );
+        return (new GeneralFullTree(branch, depth, queue) );
     }
 
     public static void main(String[] args) {
-
-
+        Queue<TreeNode> queue = new ArrayDeque<>(13000000);
 
         // for binary trees
-        ArrayList<GeneralFullTree> BinaryTrees = new ArrayList<GeneralFullTree>();
-        while (BinaryTrees.size() < 100) {
-            GeneralFullTree tree = createRandomGeneralTree( 2 );
+        HashSet<GeneralFullTree> BinaryTreesSet = new HashSet<>();
 
-
-            boolean same = false;
-            for ( GeneralFullTree bt : BinaryTrees ) {
-                if( tree.getID() == bt.getID())
-                    same = true;
-            }
-
-            if(!same)
-                BinaryTrees.add(tree);
+        while (BinaryTreesSet.size() < SIZE) {
+            GeneralFullTree tree = createRandomGeneralTree( 2, queue );
+            BinaryTreesSet.add(tree);
         }
+
+        System.out.println("Done with binary trees.");
 
         // for ternary trees
-        ArrayList<GeneralFullTree> TernaryTrees = new ArrayList<GeneralFullTree>();
-        while (TernaryTrees.size() < 100) {
-            GeneralFullTree tree = createRandomGeneralTree( 3 );
+        HashSet<GeneralFullTree> TernaryTreesSet = new HashSet<>();
 
-            boolean same = false;
-            for ( GeneralFullTree tt : TernaryTrees ) {
-                if( tree.getID() == tt.getID())
-                    same = true;
-            }
-
-            if(!same)
-                TernaryTrees.add(tree);
-
+        while (TernaryTreesSet.size() < SIZE) {
+            GeneralFullTree tree = createRandomGeneralTree( 3, queue );
+            TernaryTreesSet.add(tree);
         }
 
+        System.out.println("Done with ternary trees.");
 
         // for quinary trees
-        ArrayList<GeneralFullTree> QuinaryTrees = new ArrayList<GeneralFullTree>();
-        while (QuinaryTrees.size() < 100) {
-            GeneralFullTree tree = createRandomGeneralTree( 5 );
+        HashSet<GeneralFullTree> QuinaryTreesSet = new HashSet<>();
 
-            boolean same = false;
-            for ( GeneralFullTree qt : QuinaryTrees ) {
-                if( tree.getID() == qt.getID())
-                    same = true;
-            }
-
-            if(!same)
-                QuinaryTrees.add(tree);
-
+        while (QuinaryTreesSet.size() < SIZE) {
+            GeneralFullTree tree = createRandomGeneralTree( 5, queue );
+            QuinaryTreesSet.add(tree);
         }
+
+        System.out.println("Done with quinary trees.");
 
 
         // DFS
         System.out.println("DFS for BT");
-        for( GeneralFullTree bt : BinaryTrees ) {
+        for( GeneralFullTree bt : BinaryTreesSet ) {
             long startTime = System.nanoTime();
             bt.depthFirstSearch();
             System.out.println( System.nanoTime() - startTime );
         }
 
-        System.out.println();
+        System.out.println("Done with DFS for BT");
 
 
         // IDDFS
         System.out.println("IDS for BT");
-        for( GeneralFullTree bt : BinaryTrees ) {
+        for( GeneralFullTree bt : BinaryTreesSet ) {
             long startTime = System.nanoTime();
             bt.IterativeDeepeningDFS();
             System.out.println( System.nanoTime() - startTime );
         }
 
-        System.out.println();
+        System.out.println("Done with IDS for BT");
 
 
         // DFS
         System.out.println("DFS for TT");
-        for( GeneralFullTree tt : TernaryTrees ) {
+        for( GeneralFullTree tt : TernaryTreesSet ) {
             long startTime = System.nanoTime();
             tt.depthFirstSearch();
             System.out.println( System.nanoTime() - startTime );
         }
 
-        System.out.println();
+        System.out.println("Done with DFS for TT");
 
         // IDDFS
         System.out.println("IDS for TT");
-        for( GeneralFullTree tt : TernaryTrees ) {
+        for( GeneralFullTree tt : TernaryTreesSet ) {
             long startTime = System.nanoTime();
             tt.IterativeDeepeningDFS();
             System.out.println( System.nanoTime() - startTime );
         }
 
-        System.out.println();
+        System.out.println("Done with IDS for TT");
 
         // DFS
         System.out.println("DFS for QT");
-        for( GeneralFullTree qt : QuinaryTrees ) {
+        for( GeneralFullTree qt : QuinaryTreesSet ) {
             long startTime = System.nanoTime();
             qt.depthFirstSearch();
             System.out.println( System.nanoTime() - startTime );
         }
 
-        System.out.println();
+        System.out.println("Done with DFS for QT");
 
         // IDDFS
         System.out.println("IDS for QT");
-        for( GeneralFullTree qt : QuinaryTrees ) {
+        for( GeneralFullTree qt : QuinaryTreesSet ) {
             long startTime = System.nanoTime();
             qt.IterativeDeepeningDFS();
             System.out.println( System.nanoTime() - startTime );
         }
 
-
+        System.out.println("Done with IDS for QT");
     }
 }
