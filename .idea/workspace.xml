@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="65f65f46-e6f8-4297-a857-c56be89deb7d" name="Default" comment="measures time for DFS &amp;">
+    <list default="true" id="65f65f46-e6f8-4297-a857-c56be89deb7d" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/HW3/Driver.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Driver.java" afterPath="$PROJECT_DIR$/src/Driver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GeneralFullTree.java" afterPath="$PROJECT_DIR$/src/GeneralFullTree.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -449,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491641711089</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="measures time for DFS &amp; IDS, fixed position etc">
+      <created>1491737800357</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1491737800357</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -493,7 +498,8 @@
     <MESSAGE value="Creates 100 unique random binary, ternary, quinary full trees; fixed constructor" />
     <MESSAGE value="adds the iddfs method also changes some retrun statements and position" />
     <MESSAGE value="adds REAL IterativeDeepeningDFS" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds REAL IterativeDeepeningDFS" />
+    <MESSAGE value="measures time for DFS &amp; IDS, fixed position etc" />
+    <option name="LAST_COMMIT_MESSAGE" value="measures time for DFS &amp; IDS, fixed position etc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
